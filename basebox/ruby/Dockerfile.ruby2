@@ -1,0 +1,50 @@
+# Basebox with ruby
+#
+# VERSION        0.0.1
+# DOCKER-VERSION 0.4.8
+
+# USAGE: docker build -t codemancers/basebox/ruby2 github.com/code-mancers/Dockerfiles/basebox/ruby/Dockerfile.ruby2
+
+FROM ubuntu:12.04
+ 
+MAINTAINER Deepak Kannan "deepak@codemancers.com"
+
+# for adding ppa
+# eg. apt-add-repository -y ppa:brightbox/ruby-ng-experimental
+RUN apt-get -yq install python-software-properties
+RUN apt-get -y update
+
+## install essentials for installing ruby
+# https://github.com/sstephenson/ruby-build/wiki
+RUN apt-get -yq install build-essential libssl-dev zlib1g-dev libreadline-dev
+
+# git is always needed
+RUN apt-get -yq install git
+# needed for rbenv install
+RUN apt-get -yq install curl
+
+## Install rbenv
+RUN git clone https://github.com/sstephenson/rbenv.git /usr/local/rbenv
+RUN echo '# rbenv setup' > /etc/profile.d/rbenv.sh
+RUN echo 'export RBENV_ROOT=/usr/local/rbenv' >> /etc/profile.d/rbenv.sh
+RUN echo 'export PATH="$RBENV_ROOT/bin:$PATH"' >> /etc/profile.d/rbenv.sh
+RUN echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
+RUN chmod +x /etc/profile.d/rbenv.sh
+
+## install ruby-build
+RUN mkdir /usr/local/rbenv/plugins
+RUN git clone https://github.com/sstephenson/ruby-build.git /usr/local/rbenv/plugins/ruby-build
+
+## Setup rbenv
+ENV RBENV_ROOT /usr/local/rbenv
+# eval "$(rbenv init -)
+# https://github.com/sstephenson/rbenv#neckbeard-configuration
+ENV PATH "$RBENV_ROOT/shims:$RBENV_ROOT/bin:$PATH"
+
+## install ruby2 via ruby-build
+# CFLAGS='-g -O2
+RUN rbenv install 2.0.0-p247
+
+# install via deb
+# RUN apt-add-repository -y ppa:brightbox/ruby-ng-experimental
+# RUN apt-get -yq install ruby2.0 ruby2.0-dev
