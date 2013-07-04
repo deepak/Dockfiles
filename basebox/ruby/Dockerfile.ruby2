@@ -3,7 +3,13 @@
 # VERSION        0.0.1
 # DOCKER-VERSION 0.4.8
 
-# USAGE: docker build -t codemancers/basebox/ruby2 github.com/code-mancers/Dockerfiles/basebox/ruby/Dockerfile.ruby2
+# USAGE:
+# to create image:
+# docker build -t codemancers/basebox/ruby2 https://raw.github.com/deepak/Dockfiles/master/basebox/ruby/Dockerfile.ruby2
+# to remove image:
+# docker rmi codemancers/basebox/ruby2
+# to run login shell:
+# docker run -i -t codemancers/basebox/ruby2 /bin/bash -l
 
 FROM codemancers/buildbox
  

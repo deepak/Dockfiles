@@ -3,7 +3,7 @@
 # VERSION        0.0.1
 # DOCKER-VERSION 0.4.8
 
-# USAGE: docker build -t codemancers/buildbox github.com/code-mancers/Dockerfiles/basebox/Dockerfile.buildbox
+# USAGE: docker build -t codemancers/buildbox https://raw.github.com/deepak/Dockfiles/master/Dockerfile.buildbox
 
 FROM ubuntu:12.04
  
