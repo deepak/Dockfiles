@@ -5,23 +5,9 @@
 
 # USAGE: docker build -t codemancers/basebox/ruby2 github.com/code-mancers/Dockerfiles/basebox/ruby/Dockerfile.ruby2
 
-FROM ubuntu:12.04
+FROM codemancers/buildbox
  
 MAINTAINER Deepak Kannan "deepak@codemancers.com"
-
-# for adding ppa
-# eg. apt-add-repository -y ppa:brightbox/ruby-ng-experimental
-RUN apt-get -yq install python-software-properties
-RUN apt-get -y update
-
-## install essentials for installing ruby
-# https://github.com/sstephenson/ruby-build/wiki
-RUN apt-get -yq install build-essential libssl-dev zlib1g-dev libreadline-dev
-
-# git is always needed
-RUN apt-get -yq install git
-# needed for rbenv install
-RUN apt-get -yq install curl
 
 ## Install rbenv
 RUN git clone https://github.com/sstephenson/rbenv.git /usr/local/rbenv
@@ -37,19 +23,18 @@ RUN git clone https://github.com/sstephenson/ruby-build.git /usr/local/rbenv/plu
 
 ## Setup rbenv
 ENV RBENV_ROOT /usr/local/rbenv
-
-RUN echo 'export PATH="$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH"' > /usr/local/bin/use_rbenv.sh
-RUN chmod +x /usr/local/bin/use_rbenv.sh
-
-# eval "$(rbenv init -)
-# https://github.com/sstephenson/rbenv#neckbeard-configuration
-# ENV PATH "$RBENV_ROOT/shims:$RBENV_ROOT/bin:$PATH"
+ENV PATH /usr/local/rbenv/shims:/usr/local/rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 ## install ruby2 via ruby-build
 # CFLAGS='-g -O2
-RUN use_rbenv.sh; rbenv install 2.0.0-p247
-RUN use_rbenv.sh; rbenv global 2.0.0-p247
+RUN rbenv install 2.0.0-p247
+RUN rbenv global 2.0.0-p247
 
-# install via deb
-# RUN apt-add-repository -y ppa:brightbox/ruby-ng-experimental
-# RUN apt-get -yq install ruby2.0 ruby2.0-dev
+
+
+
+# # https://github.com/sstephenson/rbenv#neckbeard-configuration
+# DEAD END. cannot do
+# RUN eval "$(rbenv init -)
+# or
+# ENV PATH $RBENV_ROOT/shims:$RBENV_ROOT/bin:$PATH

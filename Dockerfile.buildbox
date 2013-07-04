@@ -1,0 +1,25 @@
+# Basebox with ruby
+#
+# VERSION        0.0.1
+# DOCKER-VERSION 0.4.8
+
+# USAGE: docker build -t codemancers/buildbox github.com/code-mancers/Dockerfiles/basebox/Dockerfile.buildbox
+
+FROM ubuntu:12.04
+ 
+MAINTAINER Deepak Kannan "deepak@codemancers.com"
+
+# for adding ppa
+# eg. apt-add-repository -y ppa:brightbox/ruby-ng-experimental
+RUN apt-get -yq install python-software-properties
+RUN apt-get -y update
+
+## install essentials for installing ruby and compiling software
+# https://github.com/sstephenson/ruby-build/wiki
+RUN apt-get -yq install build-essential libssl-dev zlib1g-dev libreadline-dev
+
+# git is always needed
+RUN apt-get -yq install git
+
+# needed for rbenv install
+RUN apt-get -yq install curl

@@ -1,0 +1,10 @@
+# Basebox with ruby using a deb
+#
+# VERSION        0.0.1
+# DOCKER-VERSION 0.4.8
+
+FROM codemancers/buildbox
+
+# install via deb
+RUN apt-add-repository -y ppa:brightbox/ruby-ng-experimental
+RUN apt-get -yq install ruby2.0 ruby2.0-dev
