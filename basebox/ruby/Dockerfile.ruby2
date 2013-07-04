@@ -37,13 +37,18 @@ RUN git clone https://github.com/sstephenson/ruby-build.git /usr/local/rbenv/plu
 
 ## Setup rbenv
 ENV RBENV_ROOT /usr/local/rbenv
+
+RUN echo 'export PATH="$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH"' > /usr/local/bin/use_rbenv.sh
+RUN chmod +x /usr/local/bin/use_rbenv.sh
+
 # eval "$(rbenv init -)
 # https://github.com/sstephenson/rbenv#neckbeard-configuration
-ENV PATH "$RBENV_ROOT/shims:$RBENV_ROOT/bin:$PATH"
+# ENV PATH "$RBENV_ROOT/shims:$RBENV_ROOT/bin:$PATH"
 
 ## install ruby2 via ruby-build
 # CFLAGS='-g -O2
-RUN rbenv install 2.0.0-p247
+RUN use_rbenv.sh; rbenv install 2.0.0-p247
+RUN use_rbenv.sh; rbenv global 2.0.0-p247
 
 # install via deb
 # RUN apt-add-repository -y ppa:brightbox/ruby-ng-experimental
