@@ -23,3 +23,6 @@ RUN apt-get -yq install git
 
 # needed for rbenv install
 RUN apt-get -yq install curl
+
+# needed for passenger
+RUN apt-get -yq install libcurl4-openssl-dev

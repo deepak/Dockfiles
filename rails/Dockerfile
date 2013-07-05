@@ -11,5 +11,9 @@ MAINTAINER Deepak Kannan "deepak@codemancers.com"
 
 ## Install nginx
 RUN apt-add-repository -y ppa:chris-lea/nginx-devel
+RUN apt-get -y update
 RUN apt-get -yq install nginx nginx-common nginx-full
+
+RUN gem install bundler --no-ri --no-rdoc
+RUN gem install unicorn --no-ri --no-rdoc
 

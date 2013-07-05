@@ -1,0 +1,18 @@
+# Run Rails server
+#
+# VERSION        0.0.1
+# DOCKER-VERSION 0.4.8
+
+# USAGE: docker build -t codemancers/rails/passenger https://raw.github.com/deepak/Dockfiles/master/rails/Dockerfile.passenger
+
+FROM codemancers/basebox/ruby2
+ 
+MAINTAINER Deepak Kannan "deepak@codemancers.com"
+
+# needed for passenger
+RUN apt-get -yq install libcurl4-openssl-dev
+
+## Install passenger (it installs nginx)
+RUN gem install --no-ri --no-rdoc passenger
+# FIXME: throws up error
+RUN passenger-install-nginx-module --auto --auto-download --prefix=/opt/nginx
